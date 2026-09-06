@@ -1,0 +1,3 @@
+#!/usr/bin/python3
+str = "Elmwood Institute"
+print(f"{str * 3}\n{str[:9]}")
