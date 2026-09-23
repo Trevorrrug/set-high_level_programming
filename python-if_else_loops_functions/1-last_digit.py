@@ -12,3 +12,4 @@ elif last_digit == 0:
 else:
     print(f"Last digit of {number} is {last_digit} and is less than 6 "
           f"and not 0")
+    
