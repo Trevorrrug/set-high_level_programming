@@ -11,6 +11,7 @@ static void print_bytes_info(PyObject *p, const char *indent)
 
 	if (!PyBytes_Check(p))
 	{
+		printf("%s[.] bytes object info\n", indent);
 		printf("%s  [ERROR] Invalid Bytes Object\n", indent);
 		return;
 	}
