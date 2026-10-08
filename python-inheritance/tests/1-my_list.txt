@@ -13,6 +13,14 @@
 >>> my_list.print_sorted()
 [1, 2, 3, 4]
 
+## Test append
+
+>>> append_list = MyList()
+>>> append_list.append(7)
+>>> append_list.append(2)
+>>> append_list
+[7, 2]
+
 ## Test that original list is unchanged
 
 >>> my_list
