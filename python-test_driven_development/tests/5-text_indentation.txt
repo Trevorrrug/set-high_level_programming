@@ -1,0 +1,17 @@
+>>> text_indentation = __import__('5-text_indentation').text_indentation
+>>> text_indentation("Hello. World?")
+Hello.
+<BLANKLINE>
+World?
+<BLANKLINE>
+>>> text_indentation(" A sentence:   With spaces. ")
+A sentence:
+<BLANKLINE>
+With spaces.
+<BLANKLINE>
+>>> text_indentation("No punctuation")
+No punctuation
+>>> text_indentation(42)
+Traceback (most recent call last):
+...
+TypeError: text must be a string
