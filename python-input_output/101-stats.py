@@ -19,6 +19,7 @@ def main():
     total_size = 0
     line_count = 0
     status_counts = {code: 0 for code in STATUS_CODES}
+    last_reported_line = 0
     try:
         for line in sys.stdin:
             line_count += 1
@@ -35,7 +36,10 @@ def main():
                 status_counts[status] += 1
             if line_count % 10 == 0:
                 print_stats(total_size, status_counts)
+                last_reported_line = line_count
     except KeyboardInterrupt:
+        pass
+    if line_count != last_reported_line or line_count == 0:
         print_stats(total_size, status_counts)
 
 
