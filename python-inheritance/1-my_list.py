@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""Define a list subclass with sorted printing."""
+
+
 class MyList(list):
     """A list subclass that can print its contents in sorted order."""
 
