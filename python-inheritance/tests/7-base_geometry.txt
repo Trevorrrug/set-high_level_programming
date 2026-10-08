@@ -1,0 +1,30 @@
+# 7. Integer Validator
+
+>>> BaseGeometry = __import__('7-base_geometry').BaseGeometry
+>>> geometry = BaseGeometry()
+>>> geometry.integer_validator("width", 12)
+>>> geometry.integer_validator("height", 89)
+>>> geometry.integer_validator("size", "12")
+Traceback (most recent call last):
+...
+TypeError: size must be an integer
+>>> geometry.integer_validator("size", 12.5)
+Traceback (most recent call last):
+...
+TypeError: size must be an integer
+>>> geometry.integer_validator("size", True)
+Traceback (most recent call last):
+...
+TypeError: size must be an integer
+>>> geometry.integer_validator("width", 0)
+Traceback (most recent call last):
+...
+ValueError: width must be greater than 0
+>>> geometry.integer_validator("height", -4)
+Traceback (most recent call last):
+...
+ValueError: height must be greater than 0
+>>> geometry.area()
+Traceback (most recent call last):
+...
+Exception: area() is not implemented
