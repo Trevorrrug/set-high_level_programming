@@ -66,6 +66,9 @@ class TestBase(unittest.TestCase):
             current = os.getcwd()
             try:
                 os.chdir(folder)
+                Rectangle.save_to_file([])
+                with open("Rectangle.json", encoding="utf-8") as file:
+                    self.assertEqual(file.read(), "[]")
                 Rectangle.save_to_file([Rectangle(1, 2)])
                 self.assertEqual(Rectangle.load_from_file()[0].area(), 2)
                 Rectangle.save_to_file([rectangle])
@@ -76,6 +79,9 @@ class TestBase(unittest.TestCase):
                                  square.to_dictionary())
                 Square.save_to_file([Square(1)])
                 self.assertEqual(Square.load_from_file()[0].size, 1)
+                Square.save_to_file([])
+                with open("Square.json", encoding="utf-8") as file:
+                    self.assertEqual(file.read(), "[]")
                 Square.save_to_file(None)
                 self.assertEqual(Square.load_from_file(), [])
                 os.remove("Square.json")
