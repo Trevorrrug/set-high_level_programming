@@ -112,6 +112,20 @@ class TestBase(unittest.TestCase):
 class TestRectangle(unittest.TestCase):
     """Test Rectangle validation, formatting, and serialization."""
 
+    def test_save_empty_values(self):
+        with tempfile.TemporaryDirectory() as folder:
+            current = os.getcwd()
+            try:
+                os.chdir(folder)
+                Rectangle.save_to_file(None)
+                with open("Rectangle.json", encoding="utf-8") as file:
+                    self.assertEqual(file.read(), "[]")
+                Rectangle.save_to_file([])
+                with open("Rectangle.json", encoding="utf-8") as file:
+                    self.assertEqual(file.read(), "[]")
+            finally:
+                os.chdir(current)
+
     def test_required_constructor_cases(self):
         rectangle = Rectangle(1, 2)
         self.assertEqual((rectangle.width, rectangle.height), (1, 2))
@@ -193,6 +207,20 @@ class TestRectangle(unittest.TestCase):
 
 class TestSquare(unittest.TestCase):
     """Test Square inheritance, validation, and serialization."""
+
+    def test_save_empty_values(self):
+        with tempfile.TemporaryDirectory() as folder:
+            current = os.getcwd()
+            try:
+                os.chdir(folder)
+                Square.save_to_file(None)
+                with open("Square.json", encoding="utf-8") as file:
+                    self.assertEqual(file.read(), "[]")
+                Square.save_to_file([])
+                with open("Square.json", encoding="utf-8") as file:
+                    self.assertEqual(file.read(), "[]")
+            finally:
+                os.chdir(current)
 
     def test_required_constructor_cases(self):
         square = Square(1)
