@@ -69,7 +69,7 @@ class Rectangle:
         if (hasattr(self, "_Rectangle__width") and
                 hasattr(self, "_Rectangle__height")):
             Rectangle.number_of_instances -= 1
-            print("Bye rectangle...")
+        print("Bye rectangle...")
 
     @staticmethod
     def bigger_or_equal(rect_1, rect_2):
