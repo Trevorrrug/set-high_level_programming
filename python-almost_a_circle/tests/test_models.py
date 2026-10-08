@@ -66,12 +66,16 @@ class TestBase(unittest.TestCase):
             current = os.getcwd()
             try:
                 os.chdir(folder)
+                Rectangle.save_to_file([Rectangle(1, 2)])
+                self.assertEqual(Rectangle.load_from_file()[0].area(), 2)
                 Rectangle.save_to_file([rectangle])
                 self.assertEqual(Rectangle.load_from_file()[0].to_dictionary(),
                                  rectangle.to_dictionary())
                 Square.save_to_file([square])
                 self.assertEqual(Square.load_from_file()[0].to_dictionary(),
                                  square.to_dictionary())
+                Square.save_to_file([Square(1)])
+                self.assertEqual(Square.load_from_file()[0].size, 1)
                 Square.save_to_file(None)
                 self.assertEqual(Square.load_from_file(), [])
                 os.remove("Square.json")
@@ -102,6 +106,38 @@ class TestBase(unittest.TestCase):
 class TestRectangle(unittest.TestCase):
     """Test Rectangle validation, formatting, and serialization."""
 
+    def test_required_constructor_cases(self):
+        rectangle = Rectangle(1, 2)
+        self.assertEqual((rectangle.width, rectangle.height), (1, 2))
+        rectangle = Rectangle(1, 2, 3)
+        self.assertEqual((rectangle.x, rectangle.y), (3, 0))
+        rectangle = Rectangle(1, 2, 3, 4)
+        self.assertEqual((rectangle.x, rectangle.y), (3, 4))
+        rectangle = Rectangle(1, 2, 3, 4, 5)
+        self.assertEqual(rectangle.id, 5)
+
+    def test_required_invalid_constructor_cases(self):
+        with self.assertRaisesRegex(TypeError, "width must be an integer"):
+            Rectangle("1", 2)
+        with self.assertRaisesRegex(TypeError, "height must be an integer"):
+            Rectangle(1, "2")
+        with self.assertRaisesRegex(TypeError, "x must be an integer"):
+            Rectangle(1, 2, "3")
+        with self.assertRaisesRegex(TypeError, "y must be an integer"):
+            Rectangle(1, 2, 3, "4")
+        with self.assertRaisesRegex(ValueError, "width must be > 0"):
+            Rectangle(-1, 2)
+        with self.assertRaisesRegex(ValueError, "height must be > 0"):
+            Rectangle(1, -2)
+        with self.assertRaisesRegex(ValueError, "width must be > 0"):
+            Rectangle(0, 2)
+        with self.assertRaisesRegex(ValueError, "height must be > 0"):
+            Rectangle(1, 0)
+        with self.assertRaisesRegex(ValueError, "x must be >= 0"):
+            Rectangle(1, 2, -3)
+        with self.assertRaisesRegex(ValueError, "y must be >= 0"):
+            Rectangle(1, 2, 3, -4)
+
     def test_validation_and_properties(self):
         rectangle = Rectangle(3, 4)
         for name, value in (("width", "3"), ("height", 1.5),
@@ -127,6 +163,16 @@ class TestRectangle(unittest.TestCase):
             rectangle.display()
         self.assertEqual(output.getvalue(), "\n " + "##\n " + "##\n")
 
+    def test_required_display_cases(self):
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output):
+            Rectangle(4, 6).display()
+        self.assertEqual(output.getvalue(), "####\n" * 6)
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output):
+            Rectangle(2, 2, 1).display()
+        self.assertEqual(output.getvalue(), " ##\n ##\n")
+
     def test_update_and_dictionary(self):
         rectangle = Rectangle(2, 3)
         rectangle.update(8, 4, 5, 6, 7)
@@ -141,6 +187,32 @@ class TestRectangle(unittest.TestCase):
 
 class TestSquare(unittest.TestCase):
     """Test Square inheritance, validation, and serialization."""
+
+    def test_required_constructor_cases(self):
+        square = Square(1)
+        self.assertEqual(square.size, 1)
+        square = Square(1, 2)
+        self.assertEqual((square.x, square.y), (2, 0))
+        square = Square(1, 2, 3)
+        self.assertEqual((square.x, square.y), (2, 3))
+        square = Square(1, 2, 3, 4)
+        self.assertEqual(square.id, 4)
+
+    def test_required_invalid_constructor_cases(self):
+        with self.assertRaisesRegex(TypeError, "width must be an integer"):
+            Square("1")
+        with self.assertRaisesRegex(TypeError, "x must be an integer"):
+            Square(1, "2")
+        with self.assertRaisesRegex(TypeError, "y must be an integer"):
+            Square(1, 2, "3")
+        with self.assertRaisesRegex(ValueError, "width must be > 0"):
+            Square(-1)
+        with self.assertRaisesRegex(ValueError, "x must be >= 0"):
+            Square(1, -2)
+        with self.assertRaisesRegex(ValueError, "y must be >= 0"):
+            Square(1, 2, -3)
+        with self.assertRaisesRegex(ValueError, "width must be > 0"):
+            Square(0)
 
     def test_size_string_and_area(self):
         square = Square(5, 2, 3, 9)
