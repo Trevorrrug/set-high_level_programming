@@ -16,6 +16,30 @@ TypeError: size must be an integer
 Traceback (most recent call last):
 ...
 TypeError: size must be an integer
+>>> geometry.integer_validator()
+Traceback (most recent call last):
+...
+TypeError: BaseGeometry.integer_validator() missing 2 required positional arguments: 'name' and 'value'
+>>> geometry.integer_validator("age")
+Traceback (most recent call last):
+...
+TypeError: BaseGeometry.integer_validator() missing 1 required positional argument: 'value'
+>>> geometry.integer_validator("age", (4,))
+Traceback (most recent call last):
+...
+TypeError: age must be an integer
+>>> geometry.integer_validator("age", [3])
+Traceback (most recent call last):
+...
+TypeError: age must be an integer
+>>> geometry.integer_validator("age", {3, 4})
+Traceback (most recent call last):
+...
+TypeError: age must be an integer
+>>> geometry.integer_validator("age", None)
+Traceback (most recent call last):
+...
+TypeError: age must be an integer
 >>> geometry.integer_validator("width", 0)
 Traceback (most recent call last):
 ...
