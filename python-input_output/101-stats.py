@@ -24,16 +24,20 @@ def main():
         for line in sys.stdin:
             line_count += 1
             parts = line.split()
-            if len(parts) < 2:
+            if not parts:
                 continue
             try:
-                status = int(parts[-2])
                 size = int(parts[-1])
             except ValueError:
                 continue
             total_size += size
-            if status in status_counts:
-                status_counts[status] += 1
+            if len(parts) > 1:
+                try:
+                    status = int(parts[-2])
+                except ValueError:
+                    status = None
+                if status in status_counts:
+                    status_counts[status] += 1
             if line_count % 10 == 0:
                 print_stats(total_size, status_counts)
                 last_reported_line = line_count
