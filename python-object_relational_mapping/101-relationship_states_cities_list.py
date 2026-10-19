@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""List states and their cities with one eager-loading query."""
+"""List all states and their cities."""
 
 import sys
 from urllib.parse import quote_plus
@@ -21,7 +21,7 @@ def main():
     engine = create_engine(url)
     Session = sessionmaker(bind=engine)
     session = Session()
-    states = session.query(State).order_by(State.id).all()
+    states = session.query(State).all()
     for state in states:
         print("{}: {}".format(state.id, state.name))
         for city in state.cities:
