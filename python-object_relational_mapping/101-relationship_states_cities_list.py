@@ -5,7 +5,7 @@ import sys
 from urllib.parse import quote_plus
 
 from sqlalchemy import create_engine
-from sqlalchemy.orm import joinedload, sessionmaker
+from sqlalchemy.orm import sessionmaker
 
 from relationship_city import City
 from relationship_state import Base, State
@@ -21,8 +21,7 @@ def main():
     engine = create_engine(url)
     Session = sessionmaker(bind=engine)
     session = Session()
-    states = session.query(State).options(
-        joinedload(State.cities)).order_by(State.id).all()
+    states = session.query(State).order_by(State.id).all()
     for state in states:
         print("{}: {}".format(state.id, state.name))
         for city in state.cities:

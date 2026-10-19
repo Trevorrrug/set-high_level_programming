@@ -16,8 +16,7 @@ def main():
              "WHERE states.name = %s ORDER BY cities.id ASC")
     cursor.execute(query, (sys.argv[4],))
     cities = [row[0] for row in cursor.fetchall()]
-    if cities:
-        print(", ".join(cities))
+    print(", ".join(cities))
     cursor.close()
     db.close()
 
